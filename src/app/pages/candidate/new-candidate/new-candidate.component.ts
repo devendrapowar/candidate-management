@@ -14,9 +14,7 @@ export class NewCandidateComponent {
     private candidateService: CandidateService) { }
 
   addCandidate(candidate: Candidate) {
-    console.log('candidate', candidate);
     this.candidateService.createCandidate(candidate).subscribe((res: any) => {
-      console.log(res);
       const obj = this.candidateService.candidateList;
       obj.unshift(res);
       this.candidateService.candidateList = obj;

@@ -33,9 +33,10 @@ import { LoaderInterceptor } from './interceptor/loader-interceptor.service';
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: LoaderInterceptor,
+      useValue: LoaderInterceptor,
       multi: true,
     },
+    LoaderInterceptor
   ]
 })
 export class CoreModule { }

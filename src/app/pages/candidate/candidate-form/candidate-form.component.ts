@@ -23,13 +23,7 @@ export class CandidateFormComponent implements OnInit {
     this.selectedStep = this.steps[0];
   }
 
-  // ngOnInit(): void {
-  //   console.log('this.candidateValue', this.candidateValue);
-  //   this.candidateForm.setValue(this.candidateValue);
-  // }
-
   ngOnInit(): void {
-    console.log('this.candidateValue', this.candidateValue);
     this.candidateForm = this.fb.group({
       profile_picture: [this.candidateValue?.profile_picture],
       name: [this.candidateValue?.name],
@@ -130,7 +124,6 @@ export class CandidateFormComponent implements OnInit {
 
   onCheckChange(event: any) {
     const formArray: FormArray = this.hobbiesForm;
-    console.log('formArray', event.target.value);
     if (event.target.checked) {
       formArray.push(new FormControl(event.target.value));
     }
@@ -145,7 +138,6 @@ export class CandidateFormComponent implements OnInit {
   }
 
   submitForm() {
-    console.log('submitForm', this.candidateForm.value);
     this.onSubmit.emit(this.candidateForm.value);
   }
 

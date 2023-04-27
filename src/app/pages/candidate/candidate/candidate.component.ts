@@ -18,7 +18,6 @@ export class CandidateComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ candidates }) => {
-      console.log(candidates);
       this.candidateService.candidateList = candidates;
       this.candidateList = this.candidateService.candidateList;
     })

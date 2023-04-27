@@ -28,7 +28,6 @@ export class CandidateDetailsComponent implements OnInit {
       this.selectedCandidate = this.candidateService.getDetailsCandidate(id);
       window.scroll(0, 0);
       document.getElementById("my_link")?.scrollIntoView();
-      console.log('this.selectedCandidate', this.selectedCandidate);
     });
   }
 
@@ -53,10 +52,8 @@ export class CandidateDetailsComponent implements OnInit {
   }
 
   updateCandidate(updatedForm: Candidate | undefined) {
-    console.log('this.selectedCandidate', updatedForm);
     const update: any = { ...updatedForm, id: this.selectedCandidate?.id }
     this.candidateService.updateCandidate(this.selectedCandidate?.id, update).subscribe((res: any) => {
-      console.log(res);
       this.selectedCandidate = res;
       this.showEdit();
     })

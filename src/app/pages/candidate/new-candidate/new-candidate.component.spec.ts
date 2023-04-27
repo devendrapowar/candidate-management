@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NewCandidateComponent } from './new-candidate.component';
+import { CandidateModule } from '../candidate.module';
 
 describe('NewCandidateComponent', () => {
   let component: NewCandidateComponent;
@@ -8,6 +9,7 @@ describe('NewCandidateComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [CandidateModule],
       declarations: [ NewCandidateComponent ]
     })
     .compileComponents();

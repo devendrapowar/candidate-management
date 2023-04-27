@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AuthModule } from './pages/auth/auth.module';
@@ -17,6 +17,9 @@ import { CoreModule } from './core/core.module';
     BrowserModule,
     CoreModule,
     CandidateModule
+  ],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
   ],
   providers: [],
   bootstrap: [AppComponent]
