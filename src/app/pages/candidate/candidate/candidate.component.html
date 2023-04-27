@@ -1,0 +1,20 @@
+<div class="candidate-details">
+    <h2 class="page-title">Candidate Details Page</h2>
+    <div class="details-body">
+        <div class="row">
+            <div class="col-4">
+                <ul class="list-group left-panel">
+                    <li class="list-group-item">
+                        <button class="btn btn-primary" routerLink="/candidate/new">Create New</button>
+                    </li>
+                    <li class="list-group-item" *ngFor="let candidate of candidateList"
+                        [routerLink]="['/candidate', candidate.id]" [routerLinkActive]="'active'" [id]="candidate.id">{{candidate.name}}
+                    </li>
+                </ul>
+            </div>
+            <div class="col">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+    </div>
+</div>

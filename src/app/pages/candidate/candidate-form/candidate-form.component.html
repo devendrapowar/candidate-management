@@ -1,0 +1,202 @@
+<div class="card-body">
+    <app-step [steps]="steps" [(selectedStep)]="selectedStep"></app-step>
+    <form class="mt-3" [formGroup]="candidateForm" (ngSubmit)="submitForm()">
+        <h5>{{selectedStep.label}} </h5>
+        <ng-container [ngSwitch]="selectedStep.id">
+            <ng-container *ngSwitchCase="1">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="mb-3">
+                            <label for="profilepicture" class="form-label">Profile picture</label>
+                            <input type="text" class="form-control form-control-md" id="profilepicture"
+                                formControlName="profile_picture">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" class="form-control form-control-md" id="name" formControlName="name">
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control form-control-md" id="email" formControlName="email">
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label">Gender</label>
+                        <div class="mb-3">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="gender" id="male" value="male"
+                                    formControlName="gender">
+                                <label class="form-check-label" for="male">
+                                    Male
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="gender" id="female" value="female"
+                                    formControlName="gender">
+                                <label class="form-check-label" for="female">
+                                    Female
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label">Hobbies</label>
+                        <div class="mb-3">
+                            <div class="form-check form-check-inline" *ngFor="let hobby of hobbies; let i = index">
+                                <input class="form-check-input" type="checkbox" [name]="hobby+i" [id]="hobby+i"
+                                    [value]="hobby" (change)="onCheckChange($event)" [checked]="isChecked(hobby)">
+                                <label class="form-check-label" for="{{hobby+i}}">
+                                    {{hobby | titlecase}}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+            <ng-container *ngSwitchCase="2">
+                <ng-container formArrayName="education">
+                    <div class="d-flex justify-content-end">
+                        <button class="btn btn-secondary" type="button"
+                            (click)="add(educationForm, eductionGroup)">Add</button>
+                    </div>
+                    <div class="border-bottom border-1 mb-3"
+                        *ngFor="let edu of educationForm.controls; let i=index; let isFirst = first"
+                        formGroupName="{{i}}">
+                        <div class="row">
+                            <div class="col-5">
+                                <div class="mb-3">
+                                    <label for="institute-{{ i }}" class="form-label">Name of
+                                        School/Collage/Institute</label>
+                                    <input type="text" class="form-control form-control-md" id="institute-{{ i }}"
+                                        formControlName="institute">
+                                </div>
+                            </div>
+                            <div class="col-5">
+                                <div class="mb-3">
+                                    <label for="year-{{ i }}" class="form-label">Year of graduation</label>
+                                    <input type="text" class="form-control form-control-md" id="year-{{ i }}"
+                                        formControlName="pass_out_year">
+                                </div>
+                            </div>
+                            <div class="col-2 d-flex align-items-end">
+                                <div class="mb-3">
+                                    <button class="btn btn-default" type="button" (click)="remove(educationForm, i)">
+                                        <span class="material-icons">
+                                            delete
+                                        </span></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+            </ng-container>
+            <ng-container *ngSwitchCase="3">
+                <ng-container formArrayName="skills">
+                    <div class="d-flex justify-content-end">
+                        <button class="btn btn-secondary" type="button"
+                            (click)="add(skillsForm, skillsGroup)">Add</button>
+                    </div>
+                    <div class="border-bottom border-1 mb-3"
+                        *ngFor="let skill of skillsForm.controls; let i=index; let isFirst = first"
+                        formGroupName="{{i}}">
+                        <div class="row">
+                            <div class="col-5">
+                                <div class="mb-3">
+                                    <label for="name-{{ i }}" class="form-label">Name of Skill</label>
+                                    <input type="text" class="form-control form-control-md" id="name-{{ i }}"
+                                        formControlName="name">
+                                </div>
+                            </div>
+                            <div class="col-5">
+                                <div class="mb-3">
+                                    <label for="experience-{{ i }}" class="form-label">Experience</label>
+                                    <input type="text" class="form-control form-control-md" id="experience-{{ i }}"
+                                        formControlName="experience">
+                                </div>
+                            </div>
+                            <div class="col-2 d-flex align-items-end">
+                                <div class="mb-3">
+                                    <button class="btn btn-default" type="button" (click)="remove(skillsForm, i)">
+                                        <span class="material-icons">
+                                            delete
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+            </ng-container>
+            <ng-container *ngSwitchCase="4">
+                <ng-container formArrayName="experience">
+                    <div class="d-flex justify-content-end">
+                        <button class="btn btn-secondary" type="button"
+                            (click)="add(experienceForm, experienceGroup)">Add</button>
+                    </div>
+                    <div class="border-bottom border-1 mb-3"
+                        *ngFor="let exp of experienceForm.controls; let i=index; let isFirst = first"
+                        formGroupName="{{i}}">
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="mb-3">
+                                    <label for="company-{{ i }}" class="form-label">Name of the company</label>
+                                    <input type="text" class="form-control form-control-md" id="company-{{ i }}"
+                                        formControlName="company">
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="mb-3">
+                                    <label for="project-{{ i }}" class="form-label">Name of the project</label>
+                                    <input type="text" class="form-control form-control-md" id="project-{{ i }}"
+                                        formControlName="project">
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="mb-3">
+                                    <label for="role-{{ i }}" class="form-label">Role</label>
+                                    <input type="text" class="form-control form-control-md" id="role-{{ i }}"
+                                        formControlName="role">
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="mb-3">
+                                    <label for="duration_from-{{ i }}" class="form-label">Start Date</label>
+                                    <input type="text" class="form-control form-control-md" id="duration_from-{{ i }}"
+                                        formControlName="duration_from">
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="mb-3">
+                                    <label for="duration_to-{{ i }}" class="form-label">Start Date</label>
+                                    <input type="text" class="form-control form-control-md" id="duration_to-{{ i }}"
+                                        formControlName="duration_to">
+                                </div>
+                            </div>
+                            <div class="col-4 d-flex align-items-end justify-content-end">
+                                <div class="mb-3">
+                                    <button class="btn btn-default" type="button" (click)="remove(skillsForm, i)">
+                                        <span class="material-icons">
+                                            delete
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+            </ng-container>
+        </ng-container>
+        <div class="mt-2">
+
+            <button class="btn btn-primary mx-1" (click)="changeStep(-1)" [disabled]="stepIndex === 0"
+                type="button">prev</button>
+            <button class="btn btn-primary mx-1" (click)="changeStep(1)" [disabled]="stepIndex === steps.length-1"
+                type="button">next</button>
+            <button class="btn btn-primary" type="submit">Submit</button>
+        </div>
+    </form>
+</div>

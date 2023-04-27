@@ -1,0 +1,6 @@
+<div class="wrapper-step">
+    <ul class="step">
+        <li [class.active]="step.id === selectedStep.id" *ngFor="let step of steps" >
+            {{step.label}}</li>
+    </ul>
+</div>

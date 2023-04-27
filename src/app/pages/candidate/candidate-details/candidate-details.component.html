@@ -1,0 +1,101 @@
+<div class="card candidate-details">
+    <div class="card-header header-details">
+        <div>Candidate Details</div>
+        <div class="action">
+            <button class="btn btn-default" (click)="showEdit()" *ngIf="!showEditForm">
+                <span class="material-icons">
+                    edit
+                </span>
+            </button>
+            <button class="btn btn-default" (click)="showEdit()" *ngIf="showEditForm">
+                <span class="material-icons">
+                    person
+                </span>
+            </button>
+            <button class="btn btn-default" (click)="removeCandidate()">
+                <span class="material-icons">
+                    delete
+                </span>
+            </button>
+        </div>
+    </div>
+    <ng-container *ngIf="showEditForm; else viewDetails">
+        <app-candidate-form [candidateValue]="selectedCandidate"
+            (onSubmit)="updateCandidate($event)"></app-candidate-form>
+    </ng-container>
+</div>
+
+<!-- View Details Template -->
+
+<ng-template #viewDetails>
+    <app-step [steps]="steps" [(selectedStep)]="selectedStep" class="my-2"></app-step>
+    <div class="card-body">
+        <h5 class="card-title">{{selectedStep.label}}</h5>
+        <ng-container [ngSwitch]="selectedStep.id">
+            <ng-container *ngSwitchCase="1">
+                <div class="row g-0">
+                    <div class="col-md-4" *ngIf="selectedCandidate?.profile_picture">
+                        <img [src]="selectedCandidate?.profile_picture" (error)="onImageError(selectedCandidate)"
+                            class="img-fluid rounded-start" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">{{selectedCandidate?.name}}</h5>
+                            <p class="card-text">Email: <strong>{{selectedCandidate?.email}}</strong></p>
+                            <p class="card-text">Gender: <strong>{{selectedCandidate?.gender}}</strong></p>
+                            <p class="card-text">Hobbies: <strong
+                                    *ngFor="let hobby of selectedCandidate?.hobbies; let last = last">{{hobby}}<span
+                                        *ngIf="!last">,</span> </strong></p>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+            <ng-container *ngSwitchCase="2">
+                <div *ngIf="selectedCandidate?.education">
+                    <div class="row detail-section" *ngFor="let edu of selectedCandidate?.education">
+                        <div class="col">
+                            <p class="card-text">School/Collage/Institute: <strong>{{edu?.institute}}</strong></p>
+                        </div>
+                        <div class="col">
+                            <p class="card-text">Year of graduation: <strong>{{edu?.pass_out_year}}</strong></p>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+            <ng-container *ngSwitchCase="3">
+                <div class="row detail-section" *ngFor="let skill of selectedCandidate?.skills">
+                    <div class="col">
+                        <p class="card-text">Name of Skill: <strong>{{skill.name}}</strong></p>
+                    </div>
+                    <div class="col">
+                        <p class="card-text">Experience in months: <strong>{{skill.experience |
+                                yearToMonth}}</strong>
+                        </p>
+                    </div>
+                </div>
+            </ng-container>
+            <ng-container *ngSwitchCase="4">
+                <div *ngIf="selectedCandidate?.experience">
+                    <div class="row row-cols-2 detail-section" *ngFor="let exp of selectedCandidate?.experience">
+                        <div class="col">
+                            <p class="card-text">Company: <strong>{{exp.company}}</strong></p>
+                        </div>
+                        <div class="col">
+                            <p class="card-text">Project: <strong>{{exp.project}}</strong></p>
+                        </div>
+                        <div class="col">
+                            <p class="card-text">Role: <strong>{{exp.role}}</strong></p>
+                        </div>
+                        <div class="col">
+                            <p class="card-text">Duration:
+                                <strong>{{exp.duration_from}}</strong><strong>-{{exp.duration_to}}</strong>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </ng-container>
+        <button class="btn btn-primary mx-1" (click)="changeStep(-1)" [disabled]="stepIndex === 0">prev</button>
+        <button class="btn btn-primary mx-1" (click)="changeStep(1)" [disabled]="stepIndex === steps.length-1">next</button>
+    </div>
+</ng-template>
